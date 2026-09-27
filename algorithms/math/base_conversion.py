@@ -61,6 +61,9 @@ def base_to_int(str_to_convert: str, base: int) -> int:
     Returns:
         The base-10 integer value.
 
+    Raises:
+        ValueError: If the input contains no digits after removing its sign.
+
     Examples:
         >>> base_to_int('101', 2)
         5
@@ -72,6 +75,8 @@ def base_to_int(str_to_convert: str, base: int) -> int:
     is_negative = str_to_convert.startswith("-")
     if is_negative:
         str_to_convert = str_to_convert[1:]
+    if not str_to_convert:
+        raise ValueError("number must contain at least one digit")
     digit = {}
     for ind, char in enumerate(string.digits + string.ascii_uppercase):
         digit[char] = ind

@@ -21,3 +21,10 @@ def test_signed_conversion_matches_builtin(base):
 def test_decode_negative_literal(encoded, base, expected):
     """Decoding also works on literals not produced by the encoder."""
     assert base_to_int(encoded, base) == expected
+
+
+@pytest.mark.parametrize("encoded", ["", "-"])
+def test_missing_digits_are_rejected(encoded):
+    """Neither an empty string nor a sign alone represents zero."""
+    with pytest.raises(ValueError, match="at least one digit"):
+        base_to_int(encoded, 16)
